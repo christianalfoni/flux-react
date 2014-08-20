@@ -10,9 +10,9 @@ A library combining tools to develop with a FLUX architecture
 * Supports common module loaders
 
 # What is it all about?
-Read my post on [React JS and FLUX](http://www.christianalfoni.com/) to know more about this.
+Read my post on [React JS and FLUX](http://christianalfoni.github.io/javascript/2014/08/20/react-js-and-flux.html) to know more about this.
 
-# API
+## API
 **FLUX.debug()**: Puts React on the window object to trigger Chrome React dev-tools
 
 **FLUX.React**: The React JS lib
@@ -27,11 +27,11 @@ Read my post on [React JS and FLUX](http://www.christianalfoni.com/) to know mor
 
 **FLUX.dispatch**: Dispatch a new intent (action) through your app (read more below)
 
-# How to install
+## How to install
 Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/react-flux/master/dist/FLUX.min.js) or use
 `npm install flux-react`.
 
-# Example
+## Example
 *main.js*
 ```javascript
 var FLUX = require('react-flux');
