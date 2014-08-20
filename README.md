@@ -13,16 +13,23 @@ A library combining tools to develop with a FLUX architecture
 Read my post on [React JS and FLUX](http://www.christianalfoni.com/) to know more about this.
 
 # API
-* **FLUX.debug()**: Puts React on the window object to trigger Chrome React dev-tools
-* **FLUX.React**: The React JS lib
-* **FLUX.renderComponent(ComponentClass, node)**: Short for FLUX.React.renderComponent()
-* **FLUX.unmountComponentAtNode(node)**: Short for FLUX.React.unmountComponentAtNode()
-* **FLUX.createComponent(props)**: Creates an extended React JS Component Class (read more below)
-* **FLUX.createStore(name, props)**: Creates a FLUX store
-* **FLUX.dispatch**: Dispatch a new intent (action) through your app (read more below)
+**FLUX.debug()**: Puts React on the window object to trigger Chrome React dev-tools
 
-* **FLUX.copy(obj1-obj5)**: Creates a new object and merges up to five passed objects into that new object
-* **FLUX.mergeInto(target, source)**: Merges source object into target object
+**FLUX.React**: The React JS lib
+
+**FLUX.renderComponent(ComponentClass, node)**: Short for FLUX.React.renderComponent()
+
+**FLUX.unmountComponentAtNode(node)**: Short for FLUX.React.unmountComponentAtNode()
+
+**FLUX.createComponent(props)**: Creates an extended React JS Component Class (read more below)
+
+**FLUX.createStore(name, props)**: Creates a FLUX store
+
+**FLUX.dispatch**: Dispatch a new intent (action) through your app (read more below)
+
+**FLUX.copy(obj1-obj5)**: Creates a new object and merges up to five passed objects into that new object
+
+**FLUX.mergeInto(target, source)**: Merges source object into target object
 
 # How to install
 Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/react-flux/master/dist/FLUX.min.js) or use
