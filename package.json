@@ -1,5 +1,5 @@
 {
-  "name": "react-flux",
+  "name": "flux-react",
   "version": "1.0.0",
   "description": "A library to handle the FLUX architecture with React JS",
   "main": "./app/main.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/christianalfoni/react-flux.git"
+    "url": "https://github.com/christianalfoni/flux-react.git"
   },
   "author": "Christian Alfoni",
   "license": "ISC",
