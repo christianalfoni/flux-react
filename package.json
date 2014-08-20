@@ -1,6 +1,6 @@
 {
   "name": "flux-react",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "A library to handle the FLUX architecture with React JS",
   "main": "./app/main.js",
   "scripts": {

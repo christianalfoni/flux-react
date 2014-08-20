@@ -14,8 +14,8 @@ describe('ExendedComponent', function() {
     var ExtendedComponent = require('../app/ExtendedComponent.js');
     var Dispatcher = new ReactDispatcher();
     var stores = {
-      'storeA': ReactStore.create(Dispatcher, {dispatch: function () { this.flush(); }}), 
-      'storeB': ReactStore.create(Dispatcher, {dispatch: function () { this.flush(); }})
+      'storeA': ReactStore.create('storeA', Dispatcher, {dispatch: function () { this.flush(); }}), 
+      'storeB': ReactStore.create('storeB', Dispatcher, {dispatch: function () { this.flush(); }})
     };
     var storesDidUpdateCalled = false;
     var extendedComponent = new ExtendedComponent(Dispatcher, stores, {
@@ -32,8 +32,8 @@ describe('ExendedComponent', function() {
     var ExtendedComponent = require('../app/ExtendedComponent.js');
     var Dispatcher = new ReactDispatcher();
     var stores = {
-      'storeA': ReactStore.create(Dispatcher, {dispatch: function () { this.flush(); }}), 
-      'storeB': ReactStore.create(Dispatcher, {dispatch: function () { this.flush(); }})
+      'storeA': ReactStore.create('storeA', Dispatcher, {dispatch: function () { this.flush(); }}), 
+      'storeB': ReactStore.create('storeB', Dispatcher, {dispatch: function () { this.flush(); }})
     };
     var storesDidUpdateCalled = false;
     var componentDidMountCalled = false;
@@ -65,8 +65,8 @@ describe('ExendedComponent', function() {
     var ExtendedComponent = require('../app/ExtendedComponent.js');
     var Dispatcher = new ReactDispatcher();
     var stores = {
-      'storeA': ReactStore.create(Dispatcher, {dispatch: function () { this.flush(); }}), 
-      'storeB': ReactStore.create(Dispatcher, {dispatch: function () { this.flush(); }})
+      'storeA': ReactStore.create('storeA', Dispatcher, {dispatch: function () { this.flush(); }}), 
+      'storeB': ReactStore.create('storeB', Dispatcher, {dispatch: function () { this.flush(); }})
     };
     var storesDidUpdateCalled = false;
     var componentDidMountCalled = false;
@@ -85,8 +85,8 @@ describe('ExendedComponent', function() {
     var ExtendedComponent = require('../app/ExtendedComponent.js');
     var Dispatcher = new ReactDispatcher();
     var stores = {
-      'storeA': ReactStore.create(Dispatcher, {dispatch: function () { this.flush(); }}), 
-      'storeB': ReactStore.create(Dispatcher, {dispatch: function () { this.flush(); }})
+      'storeA': ReactStore.create('storeA', Dispatcher, {dispatch: function () { this.flush(); }}), 
+      'storeB': ReactStore.create('storeB', Dispatcher, {dispatch: function () { this.flush(); }})
     };
     var storesDidUpdateCalled = false;
     var componentDidMountCalled = false;

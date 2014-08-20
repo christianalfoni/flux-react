@@ -8,7 +8,7 @@ function ExtendedComponent (dispatcher, stores, props) {
 
 		if (props.getInitialState) {
 			this.getInitialState = function () {
-				props.getInitialState.apply(this, componentStores);
+				return props.getInitialState.apply(this, componentStores);
 			};
 		}
 
@@ -21,7 +21,6 @@ function ExtendedComponent (dispatcher, stores, props) {
 				if (doUpdate) {
 					props.storesDidUpdate.apply(this, componentStores);
 					doUpdate = false;
-				} else {
 					process.nextTick(function () {
 						doUpdate = true;
 					});	
