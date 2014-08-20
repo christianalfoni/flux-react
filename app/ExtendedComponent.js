@@ -1,16 +1,10 @@
 
-function ExtendedComponent (dispatcher, stores, props) {
+function ExtendedComponent (dispatcher, props) {
 	var componentStores = [];
 	if (props.stores) {
-		props.stores.forEach(function (storeName) {
-			componentStores.push(typeof storeName === 'string' ? stores[storeName]: storeName);
+		props.stores.forEach(function (store) {
+			componentStores.push(store);
 		});
-
-		if (props.getInitialState) {
-			this.getInitialState = function () {
-				return props.getInitialState.apply(this, componentStores);
-			};
-		}
 
 		if (props.storesDidUpdate) {
 			/* Only update the stores on first event from the stores, then block until
@@ -19,7 +13,7 @@ function ExtendedComponent (dispatcher, stores, props) {
 			var doUpdate = true;
 			this.storesDidUpdate = function () {
 				if (doUpdate) {
-					props.storesDidUpdate.apply(this, componentStores);
+					props.storesDidUpdate();
 					doUpdate = false;
 					process.nextTick(function () {
 						doUpdate = true;

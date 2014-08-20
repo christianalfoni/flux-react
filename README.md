@@ -1,11 +1,10 @@
 react-flux
 ==========
 
-A library combining tools to develop with a FLUX architecture. Read more about FLUX over at [Facebook Flux](http://facebook.github.io/flux/).
+A library extending React to develop with a FLUX architecture. Read more about FLUX over at [Facebook Flux](http://facebook.github.io/flux/).
 
 ## Scope
 * Uses the [react-flux-dispatcher](https://github.com/christianalfoni/react-flux-dispatcher) and the [react-flux-store](https://github.com/christianalfoni/react-flux-store)
-* Includes React JS v 0.11.1
 * A simple API for using React JS in a FLUX architecture
 * Supports common module loaders
 
@@ -13,19 +12,11 @@ A library combining tools to develop with a FLUX architecture. Read more about F
 Read my post on [React JS and FLUX](http://christianalfoni.github.io/javascript/2014/08/20/react-js-and-flux.html) to know more about this.
 
 ## API
-**FLUX.debug()**: Puts React on the window object to trigger Chrome React dev-tools
+**React.debug()**: Puts React on the window object to trigger Chrome React dev-tools
 
-**FLUX.React**: The React JS lib
+**React.createStore(name, props)**: Creates a FLUX store
 
-**FLUX.renderComponent(ComponentClass, node)**: Short for FLUX.React.renderComponent()
-
-**FLUX.unmountComponentAtNode(node)**: Short for FLUX.React.unmountComponentAtNode()
-
-**FLUX.createComponent(props)**: Creates an extended React JS Component Class (read more below)
-
-**FLUX.createStore(name, props)**: Creates a FLUX store
-
-**FLUX.dispatch**: Dispatch a new intent (action) through your app (read more below)
+**React.dispatch**: Dispatch a new intent (action) through your app (read more below)
 
 ## How to install
 Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/react-flux/master/dist/FLUX.min.js) or use
@@ -34,19 +25,17 @@ Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/rea
 ## Example
 *main.js*
 ```javascript
-var FLUX = require('react-flux');
-var userStore = require('./stores/user.js');
+var React = require('react-flux');
 var App = require('./App.js');
 
-FLUX.debug(); // Show the Chrome React dev-tools
-FLUX.createStore('UserStore', userStore);
-FLUX.renderComponent(<App/>, document.body);
+React.debug(); // Show the Chrome React dev-tools
+React.renderComponent(<App/>, document.body);
 ```
 *stores/UserStore.js*
 ```javascript
-var FLUX = require('react-flux');
+var React = require('react-flux');
 var user = { name: 'Bob', active: true };
-module.exports = {
+module.exports = React.createStore({
 
 	// A getter which returns a new object with user 
 	// properties to avoid mutation
@@ -69,25 +58,26 @@ module.exports = {
 				break;
 		}
 	}
-};
+});
 ```
 
 *App.js*
 ```javascript
-var FLUX = require('react-flux');
-var App = FLUX.createComponent({
-	stores: ['UserStore'], // An array of stores to be dependant of
+var React = require('react-flux');
+var UserStore = require('./stores/UserStore.js');
 
-	// Now getInitialState gets the stores as arguments
-	getInitialState: fuction (UserStore) { 
+var App = React.createClass({
+	stores: [UserStore], // An array of stores to be dependant of
+
+	getInitialState: fuction () { 
 		return {
 			user: UserStore.getUser()
 		}
 	},
 
 	// New method that will be called when a dependant
-	// store has flushed. The stores are received as arguments
-	storesDidUpdate: function (UserStore) {
+	// store has flushed
+	storesDidUpdate: function () {
 		this.setState({
 			user: UserStore.getUser()
 		});
@@ -99,7 +89,7 @@ var App = FLUX.createComponent({
 		this.state.user.active = this.refs.active.getDOMNode().checked;
 	},
 	dispatchChange: function () {
-		FLUX.dispatch({
+		React.dispatch({
 			type: 'USER_CHANGE',
 			user: this.state.user
 		});

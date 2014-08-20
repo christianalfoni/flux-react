@@ -18,6 +18,7 @@ gulp.task('browserify', function () {
 	return browserify(DEFAULT_OPTIONS.browserify);
 });
 
+
 gulp.task('default', ['browserify']);
 
 gulp.task('deploy', function () {

@@ -6,20 +6,17 @@ describe('ExendedComponent', function() {
   it('should add create an empty object if no "storesDidUpdate" method is passed', function() {
     var ExtendedComponent = require('../app/ExtendedComponent.js');
     var Dispatcher = new ReactDispatcher();
-    var stores = [{name: 'storeA'}, {name: 'storeB'}];
-    var extendedComponent = new ExtendedComponent(Dispatcher, stores, {});
+    var extendedComponent = new ExtendedComponent(Dispatcher, {});
     expect(extendedComponent).to.eql({});
   });
   it('should call storesDidUpdate if any of the stores passed triggers an update event', function() {
     var ExtendedComponent = require('../app/ExtendedComponent.js');
     var Dispatcher = new ReactDispatcher();
-    var stores = {
-      'storeA': ReactStore.create('storeA', Dispatcher, {dispatch: function () { this.flush(); }}), 
-      'storeB': ReactStore.create('storeB', Dispatcher, {dispatch: function () { this.flush(); }})
-    };
+    var storeA = ReactStore.create(Dispatcher, {dispatch: function () { this.flush(); }});
+    var storeB = ReactStore.create(Dispatcher, {dispatch: function () { this.flush(); }});
     var storesDidUpdateCalled = false;
-    var extendedComponent = new ExtendedComponent(Dispatcher, stores, {
-      stores: ['storeA', 'storeB'],
+    var extendedComponent = new ExtendedComponent(Dispatcher, {
+      stores: [storeA, storeB],
       storesDidUpdate: function () {
         storesDidUpdateCalled = true;
       }
@@ -31,15 +28,13 @@ describe('ExendedComponent', function() {
   it('should run original componentDidMount() and componentWillUnmount() though overriden', function() {
     var ExtendedComponent = require('../app/ExtendedComponent.js');
     var Dispatcher = new ReactDispatcher();
-    var stores = {
-      'storeA': ReactStore.create('storeA', Dispatcher, {dispatch: function () { this.flush(); }}), 
-      'storeB': ReactStore.create('storeB', Dispatcher, {dispatch: function () { this.flush(); }})
-    };
+    var storeA = ReactStore.create(Dispatcher, {dispatch: function () { this.flush(); }});
+    var storeB = ReactStore.create(Dispatcher, {dispatch: function () { this.flush(); }});
     var storesDidUpdateCalled = false;
     var componentDidMountCalled = false;
     var componentDidUnmountCalled = false;
-    var extendedComponent = new ExtendedComponent(Dispatcher, stores, {
-      stores: ['storeA', 'storeB'],
+    var extendedComponent = new ExtendedComponent(Dispatcher, {
+      stores: [storeA, storeB],
       componentDidMount: function () {
         componentDidMountCalled = true;
       },
@@ -61,39 +56,17 @@ describe('ExendedComponent', function() {
     Dispatcher.dispatch();
     expect(storesDidUpdateCalled).to.equal(false);
   });
-  it('should pass registered stores to storesDidUpdate()', function() {
-    var ExtendedComponent = require('../app/ExtendedComponent.js');
-    var Dispatcher = new ReactDispatcher();
-    var stores = {
-      'storeA': ReactStore.create('storeA', Dispatcher, {dispatch: function () { this.flush(); }}), 
-      'storeB': ReactStore.create('storeB', Dispatcher, {dispatch: function () { this.flush(); }})
-    };
-    var storesDidUpdateCalled = false;
-    var componentDidMountCalled = false;
-    var componentDidUnmountCalled = false;
-    var extendedComponent = new ExtendedComponent(Dispatcher, stores, {
-      stores: ['storeA', 'storeB'],
-      storesDidUpdate: function (storeA, storeB) {
-        expect(storeA).to.equal(stores.storeA);
-        expect(storeB).to.equal(stores.storeB);
-      }
-    });
-    extendedComponent.componentDidMount();
-    Dispatcher.dispatch();
-  });
   it('should only call storesDidUpdate() once, regardless of number of stores', function() {
     var ExtendedComponent = require('../app/ExtendedComponent.js');
     var Dispatcher = new ReactDispatcher();
-    var stores = {
-      'storeA': ReactStore.create('storeA', Dispatcher, {dispatch: function () { this.flush(); }}), 
-      'storeB': ReactStore.create('storeB', Dispatcher, {dispatch: function () { this.flush(); }})
-    };
+    var storeA = ReactStore.create(Dispatcher, {dispatch: function () { this.flush(); }});
+    var storeB = ReactStore.create(Dispatcher, {dispatch: function () { this.flush(); }});
     var storesDidUpdateCalled = false;
     var componentDidMountCalled = false;
     var componentDidUnmountCalled = false;
     var calledCount = 0;
-    var extendedComponent = new ExtendedComponent(Dispatcher, stores, {
-      stores: ['storeA', 'storeB'],
+    var extendedComponent = new ExtendedComponent(Dispatcher, {
+      stores: [storeA, storeB],
       storesDidUpdate: function (storeA, storeB) {
         calledCount++;
       }
