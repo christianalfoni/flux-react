@@ -13,7 +13,7 @@ function ExtendedComponent (dispatcher, props) {
 			var doUpdate = true;
 			this.storesDidUpdate = function () {
 				if (doUpdate) {
-					props.storesDidUpdate();
+					props.storesDidUpdate.call(store);
 					doUpdate = false;
 					process.nextTick(function () {
 						doUpdate = true;
