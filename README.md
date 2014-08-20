@@ -33,7 +33,7 @@ Read my post on [React JS and FLUX](http://www.christianalfoni.com/) to know mor
 
 # How to install
 Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/react-flux/master/dist/FLUX.min.js) or use
-`npm install react-flux`.
+`npm install flux-react`.
 
 # Example
 *main.js*
