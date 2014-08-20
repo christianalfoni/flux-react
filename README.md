@@ -3,13 +3,13 @@ react-flux
 
 A library combining tools to develop with a FLUX architecture
 
-# Scope
+## Scope
 * Uses the [react-flux-dispatcher](https://github.com/christianalfoni/react-flux-dispatcher) and the [react-flux-store](https://github.com/christianalfoni/react-flux-store)
 * Includes React JS v 0.11.1
 * A simple API for using React JS in a FLUX architecture
 * Supports common module loaders
 
-# What is it all about?
+## What is it all about?
 Read my post on [React JS and FLUX](http://christianalfoni.github.io/javascript/2014/08/20/react-js-and-flux.html) to know more about this.
 
 ## API
