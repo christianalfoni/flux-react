@@ -1,18 +1,18 @@
 react-flux
 ==========
 
-A library combining tools to develop with a FLUX architecture
+A library combining tools to develop with a FLUX architecture. Read more about FLUX over at [Facebook Flux](http://facebook.github.io/flux/).
 
-# Scope
+## Scope
 * Uses the [react-flux-dispatcher](https://github.com/christianalfoni/react-flux-dispatcher) and the [react-flux-store](https://github.com/christianalfoni/react-flux-store)
 * Includes React JS v 0.11.1
 * A simple API for using React JS in a FLUX architecture
 * Supports common module loaders
 
-# What is it all about?
-Read my post on [React JS and FLUX](http://www.christianalfoni.com/) to know more about this.
+## What is it all about?
+Read my post on [React JS and FLUX](http://christianalfoni.github.io/javascript/2014/08/20/react-js-and-flux.html) to know more about this.
 
-# API
+## API
 **FLUX.debug()**: Puts React on the window object to trigger Chrome React dev-tools
 
 **FLUX.React**: The React JS lib
@@ -27,15 +27,11 @@ Read my post on [React JS and FLUX](http://www.christianalfoni.com/) to know mor
 
 **FLUX.dispatch**: Dispatch a new intent (action) through your app (read more below)
 
-**FLUX.copy(obj1-obj5)**: Creates a new object and merges up to five passed objects into that new object
-
-**FLUX.mergeInto(target, source)**: Merges source object into target object
-
-# How to install
+## How to install
 Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/react-flux/master/dist/FLUX.min.js) or use
 `npm install flux-react`.
 
-# Example
+## Example
 *main.js*
 ```javascript
 var FLUX = require('react-flux');
@@ -52,10 +48,13 @@ var FLUX = require('react-flux');
 var user = { name: 'Bob', active: true };
 module.exports = {
 
-	// A getter which returns a copy of the user object to prevent
-	// mutation
+	// A getter which returns a new object with user 
+	// properties to avoid mutation
 	getUser: function () {
-		return FLUX.copy(user);
+		return {
+			name: user.name,
+			active: user.active
+		};
 	},
 
 	// Dispatch is called on every dispatch call to FLUX.
@@ -64,7 +63,8 @@ module.exports = {
 	dispatch: function (payload) {
 		switch (payload.type) {
 			case 'USER_CHANGE':
-				FLUX.mergeInto(user, payload.user);
+				user.name = payload.user.name;
+				user.active = payload.user.active;
 				this.flush(); // Tell the components dependant of this store to update
 				break;
 		}
