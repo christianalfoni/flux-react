@@ -1,7 +1,7 @@
 react-flux
 ==========
 
-A library combining tools to develop with a FLUX architecture
+A library combining tools to develop with a FLUX architecture. Read more about FLUX over at [Facebook Flux](http://facebook.github.io/flux/).
 
 ## Scope
 * Uses the [react-flux-dispatcher](https://github.com/christianalfoni/react-flux-dispatcher) and the [react-flux-store](https://github.com/christianalfoni/react-flux-store)
