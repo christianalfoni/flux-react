@@ -1,6 +1,6 @@
 var React = require('react');
-var ReactDispatcher = require('react-flux-dispatcher');
-var ReactStore = require('react-flux-store');
+var ReactDispatcher = require('flux-react-dispatcher');
+var ReactStore = require('flux-react-store');
 var merge = require('react/lib/merge');
 
 var ExtendedComponent = require('./ExtendedComponent.js');
