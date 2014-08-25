@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
-var ReactDispatcher = require('react-flux-dispatcher');
-var ReactStore = require('react-flux-store');
+var ReactDispatcher = require('flux-react-dispatcher');
+var ReactStore = require('flux-react-store');
 
 describe('ExendedComponent', function() {
   it('should add create an empty object if no "storesDidUpdate" method is passed', function() {
