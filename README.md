@@ -26,7 +26,7 @@ Read my post on [React JS and FLUX](http://christianalfoni.github.io/javascript/
 
 **React.deferToRoute(path)**: Returns a function when triggered goes to path defined
 
-**React.run(optional:callback)**: Will run callback when document is loaded and trigger the router. Return value of callback can be a promise
+**React.run(optional:callback)**: Will run callback, if defined, when document is loaded and trigger the router. Return value of callback can be a promise
 
 ## How to install
 Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/flux-react/master/dist/FLUX.min.js) or use
