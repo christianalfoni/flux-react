@@ -20,7 +20,13 @@ Read my post on [React JS and FLUX](http://christianalfoni.github.io/javascript/
 
 **React.dispatch**: Dispatch a new intent (action) through your app (read more below)
 
-**React.createRouter(routes)**: Create a router
+**React.createRoute(path, callback)**: Create a router
+
+**React.goToRoute(path)**: Go instantly to a path
+
+**React.deferToRoute(path)**: Returns a function when triggered goes to path defined
+
+**React.run(optional:callback)**: Will run callback when document is loaded and trigger the router. Return value of callback can be a promise
 
 ## How to install
 Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/flux-react/master/dist/FLUX.min.js) or use
@@ -30,27 +36,20 @@ Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/flu
 *main.js*
 ```javascript
 var React = require('flux-react');
-var router = require('./router.js');
-
 React.debug(); // Show the Chrome React dev-tools
-router.init(); // Start the router
 
-```
-*router.js*
-```javascript
-var React = require('flux-react');
 var App = require('./App.js');
 
-module.exports = React.createRouter({
-	
-	'/': function () {
-		React.unmountComponentAtNode(document.body);
-		React.renderComponent(<App/>, document.body);
-	},
-	'*': '/'
-
+React.createRoute('/', function () {
+	React.unmountComponentAtNode(document.body);
+	React.renderComponent(<App/>, document.body);	
 });
+
+React.createRoute('*', '/');
+
+React.run(); // Triggers the router
 ```
+
 *stores/UserStore.js*
 ```javascript
 var React = require('flux-react');
