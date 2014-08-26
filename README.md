@@ -6,28 +6,28 @@ react-flux
 A library extending React to develop with a FLUX architecture. Read more about FLUX over at [Facebook Flux](http://facebook.github.io/flux/).
 
 ## Scope
-* Uses the [react-flux-dispatcher](https://github.com/christianalfoni/react-flux-dispatcher) and the [react-flux-store](https://github.com/christianalfoni/react-flux-store)
+* Uses the [flux-react-dispatcher](https://github.com/christianalfoni/flux-react-dispatcher) and the [flux-react-store](https://github.com/christianalfoni/flux-react-store)
 * A simple API for using React JS in a FLUX architecture
 * Supports common module loaders
 
 ## What is it all about?
-Read my post on [React JS and FLUX](http://christianalfoni.github.io/javascript/2014/08/20/react-js-and-flux.html) to know more about this.
+Read my post on [React JS and FLUX](http://christianalfoni.github.io/javascript/2014/08/20/react-js-and-flux.html) to know more about this. I wanted to create a very simple API that integrates with the React JS lib. The reason for not wrapping it is how React JS behaves in browserify with JSX transforms etc. It made more sense to add a few more methods.
 
 ## API
 **React.debug()**: Puts React on the window object to trigger Chrome React dev-tools
 
-**React.createStore(name, props)**: Creates a FLUX store
+**React.createStore(props)**: Creates a FLUX store
 
 **React.dispatch**: Dispatch a new intent (action) through your app (read more below)
 
 ## How to install
-Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/react-flux/master/dist/FLUX.min.js) or use
+Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/flux-react/master/dist/FLUX.min.js) or use
 `npm install flux-react`.
 
 ## Example
 *main.js*
 ```javascript
-var React = require('react-flux');
+var React = require('flux-react');
 var App = require('./App.js');
 
 React.debug(); // Show the Chrome React dev-tools
@@ -35,7 +35,7 @@ React.renderComponent(<App/>, document.body);
 ```
 *stores/UserStore.js*
 ```javascript
-var React = require('react-flux');
+var React = require('flux-react');
 var user = { name: 'Bob', active: true };
 module.exports = React.createStore({
 
@@ -65,7 +65,7 @@ module.exports = React.createStore({
 
 *App.js*
 ```javascript
-var React = require('react-flux');
+var React = require('flux-react');
 var UserStore = require('./stores/UserStore.js');
 
 var App = React.createClass({
