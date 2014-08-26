@@ -3,15 +3,15 @@
 react-flux
 ==========
 
-A library extending React to develop with a FLUX architecture. Read more about FLUX over at [Facebook Flux](http://facebook.github.io/flux/).
+A React JS expansion with dispatcher, stores and a router. Read more about FLUX over at [Facebook Flux](http://facebook.github.io/flux/).
 
 ## Scope
-* Uses the [flux-react-dispatcher](https://github.com/christianalfoni/flux-react-dispatcher) and the [flux-react-store](https://github.com/christianalfoni/flux-react-store)
+* Uses the [flux-react-dispatcher](https://github.com/christianalfoni/flux-react-dispatcher), the [flux-react-router](https://github.com/christianalfoni/flux-react-router) and the [flux-react-store](https://github.com/christianalfoni/flux-react-store)
 * A simple API for using React JS in a FLUX architecture
 * Supports common module loaders
 
 ## What is it all about?
-Read my post on [React JS and FLUX](http://christianalfoni.github.io/javascript/2014/08/20/react-js-and-flux.html) to know more about this. I wanted to create a very simple API that integrates with the React JS lib. The reason for not wrapping it is how React JS behaves in browserify with JSX transforms etc. It made more sense to add a few more methods.
+Read my post on [React JS and FLUX](http://christianalfoni.github.io/javascript/2014/08/20/react-js-and-flux.html) to know more about this. I wanted to create a very simple API that integrates with the React JS lib. The reason for not wrapping it is how React JS behaves in browserify with JSX transforms etc. It made more sense to add a few more methods to the library itself.
 
 ## API
 **React.debug()**: Puts React on the window object to trigger Chrome React dev-tools
@@ -19,6 +19,8 @@ Read my post on [React JS and FLUX](http://christianalfoni.github.io/javascript/
 **React.createStore(props)**: Creates a FLUX store
 
 **React.dispatch**: Dispatch a new intent (action) through your app (read more below)
+
+**React.createRouter(routes)**: Create a router
 
 ## How to install
 Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/flux-react/master/dist/FLUX.min.js) or use
@@ -28,10 +30,26 @@ Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/flu
 *main.js*
 ```javascript
 var React = require('flux-react');
-var App = require('./App.js');
+var router = require('./router.js');
 
 React.debug(); // Show the Chrome React dev-tools
-React.renderComponent(<App/>, document.body);
+router.init(); // Start the router
+
+```
+*router.js*
+```javascript
+var React = require('flux-react');
+var App = require('./App.js');
+
+module.exports = React.createRouter({
+	
+	'/': function () {
+		React.unmountComponentAtNode(document.body);
+		React.renderComponent(<App/>, document.body);
+	},
+	'*': '/'
+
+});
 ```
 *stores/UserStore.js*
 ```javascript
@@ -69,8 +87,8 @@ var React = require('flux-react');
 var UserStore = require('./stores/UserStore.js');
 
 var App = React.createClass({
-	stores: [UserStore], // An array of stores to be dependant of
 
+	stores: [UserStore], // An array of stores to be dependant of
 	getInitialState: fuction () { 
 		return {
 			user: UserStore.getUser()
