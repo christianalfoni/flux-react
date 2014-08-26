@@ -20,7 +20,7 @@ Read my post on [React JS and FLUX](http://christianalfoni.github.io/javascript/
 
 **React.dispatch**: Dispatch a new intent (action) through your app (read more below)
 
-**React.createRoute(path, callback)**: Create a router
+**React.createRoute(path, callback)**: Create a route
 
 **React.goToRoute(path)**: Go instantly to a path
 
