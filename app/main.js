@@ -33,7 +33,11 @@ React.run = function (callback) {
 	callback = callback || function () {};
 	var onReady = function () {
 		if (document.readyState === 'complete') {
-			Promise.resolve(callback()).then(ReactRouter.init).catch(function (err) { throw err; });
+			Promise.resolve(callback())
+			.then(ReactRouter.init)
+			.catch(function (err) { 
+				process.nextTick(function () { throw err; }) 
+			});
 		}
 	};
 
