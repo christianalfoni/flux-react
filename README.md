@@ -30,7 +30,7 @@ Read my post on [React JS and FLUX](http://christianalfoni.github.io/javascript/
 
 ## How to install
 Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/flux-react/master/dist/FLUX.min.js) or use
-`npm install flux-react`, but I recommend using the boilerplate located here: [flux-react-boilerplate](https://rawgithub.com/christianalfoni/flux-react-boilerplate). It has everything set up for you.
+`npm install flux-react`, but I recommend using the boilerplate located here: [flux-react-boilerplate](https://github.com/christianalfoni/flux-react-boilerplate). It has everything set up for you.
 
 ## Example
 *main.js*
