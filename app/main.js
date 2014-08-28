@@ -9,7 +9,7 @@ var ExtendedComponent = require('./ExtendedComponent.js');
 var dispatcher = new ReactDispatcher();
 
 React.debug = function () {
-	window.React = React;
+	global.React = React;
 };
 
 var createClass = React.createClass;
