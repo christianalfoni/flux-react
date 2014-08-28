@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/christianalfoni/flux-react.svg?branch=master)](https://travis-ci.org/christianalfoni/flux-react)
 
-react-flux
+flux-react
 ==========
 
 A React JS expansion with dispatcher, stores and a router. Read more about FLUX over at [Facebook Flux](http://facebook.github.io/flux/).
