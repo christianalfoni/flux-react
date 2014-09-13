@@ -32,7 +32,7 @@ var runBrowserify = function (options) {
     var bundler = browserify({
         entries: [options.src],
         transform: [reactify],
-        debug: true,
+        debug: options.debug,
         standalone: 'FLUX',
         cache: {}, packageCache: {}, fullPaths: true
     });

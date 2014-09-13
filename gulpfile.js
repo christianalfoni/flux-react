@@ -10,7 +10,8 @@ var DEFAULT_OPTIONS = {
 		isTest: false,
 		dest: './dev/',
 		watch: true,
-		uglify: false
+		uglify: false,
+    debug: true
 	}
 };
 
@@ -25,6 +26,7 @@ gulp.task('deploy', function () {
 	DEFAULT_OPTIONS.browserify.dest = './dist/';
 	DEFAULT_OPTIONS.browserify.watch = false;
 	DEFAULT_OPTIONS.browserify.uglify = true;
+  DEFAULT_OPTIONS.browserify.debug = false;
 	browserify(DEFAULT_OPTIONS.browserify);
 });
 
