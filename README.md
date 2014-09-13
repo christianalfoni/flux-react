@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/christianalfoni/flux-react.svg?branch=master)](https://travis-ci.org/christianalfoni/flux-react)
 
-react-flux
+flux-react
 ==========
 
 A React JS expansion with dispatcher, stores and a router. Read more about FLUX over at [Facebook Flux](http://facebook.github.io/flux/).
@@ -20,17 +20,17 @@ Read my post on [React JS and FLUX](http://christianalfoni.github.io/javascript/
 
 **React.dispatch**: Dispatch a new intent (action) through your app (read more below)
 
-**React.createRoute(path, callback)**: Create a router
+**React.createRoute(path, callback)**: Create a route
 
 **React.goToRoute(path)**: Go instantly to a path
 
 **React.deferToRoute(path)**: Returns a function when triggered goes to path defined
 
-**React.run(optional:callback)**: Will run callback when document is loaded and trigger the router. Return value of callback can be a promise
+**React.run(optional:callback)**: Will run callback, if defined, when document is loaded and trigger the router. Return value of callback can be a promise
 
 ## How to install
 Download from **dist/**: [FLUX.min.js](https://rawgithub.com/christianalfoni/flux-react/master/dist/FLUX.min.js) or use
-`npm install flux-react`.
+`npm install flux-react`, but I recommend using the boilerplate located here: [flux-react-boilerplate](https://github.com/christianalfoni/flux-react-boilerplate). It has everything set up for you.
 
 ## Example
 *main.js*
