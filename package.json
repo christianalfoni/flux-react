@@ -1,6 +1,6 @@
 {
   "name": "flux-react",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "A React JS expansion with dispatcher, stores and a router",
   "main": "./app/main.js",
   "scripts": {
@@ -30,6 +30,7 @@
     "karma-mocha": "^0.1.7",
     "karma-phantomjs-launcher": "^0.1.4",
     "mocha": "^1.21.4",
+    "react": "^0.11.2",
     "react-tools": "^0.11.1",
     "reactify": "^0.14.0",
     "vinyl-source-stream": "^0.1.1",
@@ -40,6 +41,6 @@
     "flux-react-dispatcher": "^1.2.2",
     "flux-react-router": "^0.6.1",
     "flux-react-store": "^1.3.1",
-    "react": "^0.11.1"
+    "react": "^0.11.2"
   }
 }

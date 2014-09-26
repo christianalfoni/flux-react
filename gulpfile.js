@@ -23,6 +23,10 @@ gulp.task('browserify', function () {
 gulp.task('default', ['browserify']);
 
 gulp.task('deploy', function () {
+
+  // Smaller build
+  process.env.NODE_ENV = 'production';
+
 	DEFAULT_OPTIONS.browserify.dest = './dist/';
 	DEFAULT_OPTIONS.browserify.watch = false;
 	DEFAULT_OPTIONS.browserify.uglify = true;
