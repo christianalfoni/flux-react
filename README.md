@@ -5,7 +5,7 @@ flux-react
 
 A React JS expansion with dispatcher, stores and a router. Read more about FLUX over at [Facebook Flux](http://facebook.github.io/flux/).
 
-Also check out: [www.jflux.io](http://www.jflux.io) which is an alternative FLUX framework that takes inspiration both from React JS, Backbone JS and Angular JS. Giving a less verbose syntax and depends on the well known jQuery. 
+Also check out: [www.jflux.io](http://www.jflux.io) which is an alternative FLUX framework that takes inspiration from React JS, Backbone JS and Angular JS. It lowers the threshold to get going with the FLUX architecture.
 
 ## Scope
 * Uses the [flux-react-dispatcher](https://github.com/christianalfoni/flux-react-dispatcher), the [flux-react-router](https://github.com/christianalfoni/flux-react-router) and the [flux-react-store](https://github.com/christianalfoni/flux-react-store)
