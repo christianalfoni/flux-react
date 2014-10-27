@@ -9,43 +9,43 @@ var flux = {
 
 function mergeStore (mixins, source, state) {
 
-  if (!mixins || !Array.isArray(mixins)) {
-    return;
-  }
-
   source.actions = source.actions || [];
   source.exports = source.exports || {};
 
-  // Merge mixins and state
-  mixins.forEach(function (mixin) {
-    Object.keys(mixin).forEach(function (key) {
+  if (mixins && Array.isArray(mixins)) {
 
-      switch(key) {
-        case 'getInitialState':
-          var mixinState = mixin.getInitialState();
-          Object.keys(mixinState).forEach(function (key) {
-            state[key] = mixinState[key];
-          });
-          break;
-        case 'mixins':
+    // Merge mixins and state
+    mixins.forEach(function (mixin) {
+      Object.keys(mixin).forEach(function (key) {
 
-          // Return as actions and exports are handled on top traversal level
-          return mergeStore(mixin.mixins, mixin, state);
-          break;
-        case 'actions':
-          source.actions = source.actions.concat(mixin.actions);
-          break;
-        case 'exports':
-          Object.keys(mixin.exports).forEach(function (key) {
-            source.exports[key] = mixin.exports[key];
-          });
-          break;
-        default:
-          source[key] = mixin[key];
-      }
+        switch(key) {
+          case 'getInitialState':
+            var mixinState = mixin.getInitialState();
+            Object.keys(mixinState).forEach(function (key) {
+              state[key] = mixinState[key];
+            });
+            break;
+          case 'mixins':
 
+            // Return as actions and exports are handled on top traversal level
+            return mergeStore(mixin.mixins, mixin, state);
+            break;
+          case 'actions':
+            source.actions = source.actions.concat(mixin.actions);
+            break;
+          case 'exports':
+            Object.keys(mixin.exports).forEach(function (key) {
+              source.exports[key] = mixin.exports[key];
+            });
+            break;
+          default:
+            source[key] = mixin[key];
+        }
+
+      });
     });
-  });
+
+  }
 
   var exports = Object.create(EventEmitter.prototype);
 
@@ -76,6 +76,7 @@ function mergeStore (mixins, source, state) {
     flux.action[action].on('trigger', source[action].bind(source));
   });
 
+  console.log(source.exports);
   // Register exports
   Object.keys(source.exports).forEach(function (key) {
     exports[key] = function () {
@@ -95,7 +96,6 @@ flux.debug = function () {
 
 flux.createActions = function () {
   flux.action = action.apply(null, arguments);
-  console.log(flux.action);
 };
 
 flux.createStore = function (definition) {
