@@ -1,0 +1,111 @@
+var React = global.React || require('react');
+var action = require('./action.js');
+var EventEmitter = require('./EventEmitter.js');
+var safeDeepClone = require('./safeDeepClone.js');
+
+var flux = {
+  action: {}
+};
+
+function mergeStore (mixins, source, state) {
+
+  if (!mixins || !Array.isArray(mixins)) {
+    return;
+  }
+
+  source.actions = source.actions || [];
+  source.exports = source.exports || {};
+
+  // Merge mixins and state
+  mixins.forEach(function (mixin) {
+    Object.keys(mixin).forEach(function (key) {
+
+      switch(key) {
+        case 'getInitialState':
+          var mixinState = mixin.getInitialState();
+          Object.keys(mixinState).forEach(function (key) {
+            state[key] = mixinState[key];
+          });
+          break;
+        case 'mixins':
+
+          // Return as actions and exports are handled on top traversal level
+          return mergeStore(mixin.mixins, mixin, state);
+          break;
+        case 'actions':
+          source.actions = source.actions.concat(mixin.actions);
+          break;
+        case 'exports':
+          Object.keys(mixin.exports).forEach(function (key) {
+            source.exports[key] = mixin.exports[key];
+          });
+          break;
+        default:
+          source[key] = mixin[key];
+      }
+
+    });
+  });
+
+  var exports = Object.create(EventEmitter.prototype);
+
+  source.emitChange = function () {
+    exports.emit('change');
+  };
+
+  source.emit = function () {
+    exports.emit.apply(exports, arguments);
+  };
+
+  exports.addChangeListener = function (callback) {
+    exports.on('change', callback);
+  };
+
+  exports.removeChangeListener = function (callback) {
+    exports.removeListener('change', callback);
+  };
+
+  // Register actions
+  source.actions.forEach(function (action) {
+    if (!source[action]) {
+      throw new Error('There is no handler for action: ' + action);
+    }
+    if (!flux.action[action]) {
+      throw new Error('There is no action defined as ' + action);
+    }
+    flux.action[action].on('trigger', source[action].bind(source));
+  });
+
+  // Register exports
+  Object.keys(source.exports).forEach(function (key) {
+    exports[key] = function () {
+      return safeDeepClone('[Circular]', [], source.exports[key].apply(state, arguments));
+    };
+  });
+
+  source.state = state;
+
+  return exports;
+
+};
+
+flux.debug = function () {
+  global.React = React;
+};
+
+flux.createActions = function () {
+  flux.action = action.apply(null, arguments);
+  console.log(flux.action);
+};
+
+flux.createStore = function (definition) {
+  var state = {};
+  return mergeStore(definition.mixins, definition, state);
+};
+
+// If running in global mode, expose $$
+if (!global.exports && !global.module && (!global.define || !global.define.amd)) {
+  global.flux = flux;
+}
+
+module.exports = flux;
