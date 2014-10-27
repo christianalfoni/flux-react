@@ -21,7 +21,7 @@ A React JS flux expansion based on experiences building [www.jsfridge.com](http:
 		- [listener](#listener)
 
 ## <a name="whatisitallabout">What is it all about?</a>
-It can be difficult to get going with React JS and FLUX as there is no complete framework with all the tools you need. This project will help you get going with the FLUX parts and it has a boilerplate with the other tools you need, like a router, ajax handling etc. [flux-react-boilerplate](https://github.com/christianalfoni/flux-react-boilerplate).
+It can be difficult to get going with React JS and FLUX as there is no complete framework with all the tools you need. This project will help you get going with the FLUX parts and it has a boilerplate with a browserify workflow, [flux-react-boilerplate](https://github.com/christianalfoni/flux-react-boilerplate).
 
 ## <a name="howtoinstall">How to install</a>
 Download from **release/** folder of the repo or use `npm install flux-react`, but I recommend using the boilerplate located here: [flux-react-boilerplate](https://github.com/christianalfoni/flux-react-boilerplate). It has everything set up for you.
