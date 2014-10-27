@@ -3,9 +3,7 @@ var action = require('./action.js');
 var EventEmitter = require('./EventEmitter.js');
 var safeDeepClone = require('./safeDeepClone.js');
 
-var flux = {
-  action: {}
-};
+var flux = {};
 
 function mergeStore (mixins, source, state) {
 
@@ -67,13 +65,13 @@ function mergeStore (mixins, source, state) {
 
   // Register actions
   source.actions.forEach(function (action) {
-    if (!source[action]) {
+    if (!action || !action.handlerName) {
+      throw new Error('This is not an action ' + action);
+    }
+    if (!source[action.handlerName]) {
       throw new Error('There is no handler for action: ' + action);
     }
-    if (!flux.action[action]) {
-      throw new Error('There is no action defined as ' + action);
-    }
-    flux.action[action].on('trigger', source[action].bind(source));
+    action.on('trigger', source[action.handlerName].bind(source));
   });
 
   // Register exports
@@ -94,7 +92,7 @@ flux.debug = function () {
 };
 
 flux.createActions = function () {
-  flux.action = action.apply(null, arguments);
+  return action.apply(null, arguments);
 };
 
 flux.createStore = function (definition) {

@@ -38,15 +38,14 @@ Puts React on the global scope, which triggers the React dev tools in Chrome
 ### <a name="actions">flux.createActions()</a>
 ```javascript
 var flux = require('flux-react');
-flux.createActions([
+var actions = flux.createActions([
 	'addTodo',
 	'removeTodo'
 ]);
-flux.action.addTodo(); // Trigger action
-flux.action.removeTodo(0); // Pass any number of arguments
+actions.addTodo(); // Trigger action
+actions.removeTodo(0); // Pass any number of arguments
 ```
-Makes actions available on the flux object. Use them inside components or other parts of your architecture. The only
-way to reach a store is through an action.
+Use them inside components or other parts of your architecture. The only way to reach a store is through an action.
 
 ### <a name="store">flux.createStore()</a>
 ```javascript
@@ -71,6 +70,7 @@ A method that returns the initial state of the store.
 #### <a name="storeactions">actions</a>
 ```javascript
 var flux = require('flux-react');
+var actions = require('./actions.js');
 var MyStore = flux.createStore({
 	getInitialState: function () {
 		return {
@@ -78,7 +78,7 @@ var MyStore = flux.createStore({
 		};
 	},
 	actions: [
-		'addTodo'
+		actions.addTodo
 	]
 });
 ```
@@ -87,6 +87,7 @@ List what actions the store should handle. They will map to handler with the sam
 #### <a name="handlers">handler</a>
 ```javascript
 var flux = require('flux-react');
+var actions = require('./actions.js');
 var MyStore = flux.createStore({
 	getInitialState: function () {
 		return {
@@ -94,7 +95,7 @@ var MyStore = flux.createStore({
 		};
 	},
 	actions: [
-		'addTodo'
+		actions.addTodo
 	],
 	addTodo: function (title) {
 		this.state.todos.push({title: title, completed: false});
@@ -106,6 +107,7 @@ Based on the name of the action, add a handler that will run when the action is 
 #### <a name="events">events</a>
 ```javascript
 var flux = require('flux-react');
+var actions = require('./actions.js');
 var MyStore = flux.createStore({
 	getInitialState: function () {
 		return {
@@ -113,8 +115,7 @@ var MyStore = flux.createStore({
 		};
 	},
 	actions: [
-		'addTodo',
-		'removeTodo'
+		actions.addTodo
 	],
 	addTodo: function (title) {
 		this.state.todos.push({title: title, completed: false});
@@ -128,6 +129,7 @@ Run **emitChange** to notify about a general change in the store. Run **emit** w
 #### <a name="exports">exports</a>
 ```javascript
 var flux = require('flux-react');
+var actions = require('./actions.js');
 var MyStore = flux.createStore({
 	getInitialState: function () {
 		return {
@@ -135,7 +137,7 @@ var MyStore = flux.createStore({
 		};
 	},
 	actions: [
-		'addTodo'
+		actions.addTodo
 	],
 	addTodo: function (title) {
 		this.state.todos.push({title: title, completed: false});
@@ -156,13 +158,14 @@ Methods defined in exports will be returned by **createStore**. Components or ot
 #### <a name="mixins">mixins</a>
 ```javascript
 var flux = require('flux-react');
+var actions = require('./actions.js');
 
 var MyMixin = {
 	getInitialState: function () {
 		return {};
 	},
 	actions: [
-		'removeTodo'
+		actions.removeTodo
 	],
 	removeTodo: function (index) {
 		this.state.todos.splice(index, 1);
@@ -179,7 +182,7 @@ var MyStore = flux.createStore({
 		};
 	},
 	actions: [
-		'addTodo'
+		actions.addTodo
 	],
 	addTodo: function (title) {
 		this.state.todos.push({title: title, completed: false});

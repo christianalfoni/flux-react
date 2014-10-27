@@ -8,7 +8,7 @@
 
 var EventEmitter = require('./EventEmitter.js');
 
-var createActionFunction = function () {
+var createActionFunction = function (actionName) {
 
   // Create the action function
   var fn = function () {
@@ -32,6 +32,9 @@ var createActionFunction = function () {
     }
   }
 
+  // Add handlerName
+  fn.handlerName = actionName;
+
   return fn;
 
 };
@@ -41,12 +44,12 @@ var action = function () {
   if (Array.isArray(arguments[0])) {
     var actionMap = {};
     arguments[0].forEach(function (actionName) {
-      actionMap[actionName] = createActionFunction();
+      actionMap[actionName] = createActionFunction(actionName);
     });
     return actionMap;
-  } else if (!arguments.length) {
-    return createActionFunction();
   }
+
+  throw new Error('You are not passing an array to createActions');
 
 };
 
