@@ -76,7 +76,6 @@ function mergeStore (mixins, source, state) {
     flux.action[action].on('trigger', source[action].bind(source));
   });
 
-  console.log(source.exports);
   // Register exports
   Object.keys(source.exports).forEach(function (key) {
     exports[key] = function () {
@@ -99,7 +98,7 @@ flux.createActions = function () {
 };
 
 flux.createStore = function (definition) {
-  var state = {};
+  var state = definition.getInitialState ? definition.getInitialState() : {};
   return mergeStore(definition.mixins, definition, state);
 };
 
