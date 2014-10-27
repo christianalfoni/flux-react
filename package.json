@@ -1,8 +1,8 @@
 {
   "name": "flux-react",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A React JS FLUX expansion",
-  "main": "./app/main.js",
+  "main": "./src/main.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start karma.conf.js"
   },
