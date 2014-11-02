@@ -7,11 +7,12 @@ A React JS flux expansion based on experiences building [www.jsfridge.com](http:
 
 - [What is it all about?](#whatisitallabout)
 - [How to install](#howtoinstall)
+- [Changes](#changes)
 - [API](#api)
 	- [flux.debug()](#debug)
 	- [flux.createActions()](#actions)
 	- [flux.createStore()](#store)
-		- [getInitialState()](#getinitialstate)
+		- [state](#getinitialstate)
 		- [actions](#storeactions)
 		- [handlers](#handlers)
 		- [events](#events)
@@ -24,7 +25,12 @@ A React JS flux expansion based on experiences building [www.jsfridge.com](http:
 It can be difficult to get going with React JS and FLUX as there is no complete framework with all the tools you need. This project will help you get going with the FLUX parts and it has a boilerplate with a browserify workflow, [flux-react-boilerplate](https://github.com/christianalfoni/flux-react-boilerplate).
 
 ## <a name="howtoinstall">How to install</a>
-Download from **release/** folder of the repo or use `npm install flux-react`, but I recommend using the boilerplate located here: [flux-react-boilerplate](https://github.com/christianalfoni/flux-react-boilerplate). It has everything set up for you.
+Download from **releases/** folder of the repo, use `npm install flux-react` or `bower install flux-react`, but I recommend using the boilerplate located here: [flux-react-boilerplate](https://github.com/christianalfoni/flux-react-boilerplate). It has everything set up for you.
+
+## <a name="changes">Changes</a>
+
+**2.2.0**
+- Removed **getInitialState()** from store and just use **state**. There is not reason to calculate state with a function as there are no props, or anything else, passed to the store on instanciation
 
 ## <a name="api">API</a>
 
@@ -54,14 +60,12 @@ var MyStore = flux.createStore({});
 ```
 Creates a store.
 
-#### <a name="getinitialstate">getInitialState()</a>
+#### <a name="getinitialstate">state</a>
 ```javascript
 var flux = require('flux-react');
 var MyStore = flux.createStore({
-	getInitialState: function () {
-		return {
-			todos: []
-		};
+	state: {
+		todos: []
 	}
 });
 ```
@@ -72,10 +76,8 @@ A method that returns the initial state of the store.
 var flux = require('flux-react');
 var actions = require('./actions.js');
 var MyStore = flux.createStore({
-	getInitialState: function () {
-		return {
-			todos: []
-		};
+	state: {
+		todos: []
 	},
 	actions: [
 		actions.addTodo
@@ -89,10 +91,8 @@ List what actions the store should handle. They will map to handler with the sam
 var flux = require('flux-react');
 var actions = require('./actions.js');
 var MyStore = flux.createStore({
-	getInitialState: function () {
-		return {
-			todos: []
-		};
+	state: {
+		todos: []
 	},
 	actions: [
 		actions.addTodo
@@ -109,10 +109,8 @@ Based on the name of the action, add a handler that will run when the action is 
 var flux = require('flux-react');
 var actions = require('./actions.js');
 var MyStore = flux.createStore({
-	getInitialState: function () {
-		return {
-			todos: []
-		};
+	state: {
+		todos: []
 	},
 	actions: [
 		actions.addTodo
@@ -131,10 +129,8 @@ Run **emitChange** to notify about a general change in the store. Run **emit** w
 var flux = require('flux-react');
 var actions = require('./actions.js');
 var MyStore = flux.createStore({
-	getInitialState: function () {
-		return {
-			todos: []
-		};
+	state: {
+		todos: []
 	},
 	actions: [
 		actions.addTodo
@@ -161,9 +157,7 @@ var flux = require('flux-react');
 var actions = require('./actions.js');
 
 var MyMixin = {
-	getInitialState: function () {
-		return {};
-	},
+	state: {},
 	actions: [
 		actions.removeTodo
 	],
@@ -176,10 +170,8 @@ var MyMixin = {
 
 var MyStore = flux.createStore({
 	mixins: [MyMixin],
-	getInitialState: function () {
-		return {
-			todos: []
-		};
+	state: {
+		todos: []
 	},
 	actions: [
 		actions.addTodo
@@ -203,13 +195,11 @@ Mixins helps you handle big stores. You do not want to divide your stores within
 var flux = require('flux-react');
 
 var StateMixin = {
-	getInitialState: function () {
-		return {
-			someState: true,
-			stateA: 'foo',
-			stateB: 'bar',
-			stateC: []
-		};
+	state: {
+		someState: true,
+		stateA: 'foo',
+		stateB: 'bar',
+		stateC: []
 	}
 };
 

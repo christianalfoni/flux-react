@@ -17,8 +17,8 @@ function mergeStore (mixins, source, state) {
       Object.keys(mixin).forEach(function (key) {
 
         switch(key) {
-          case 'getInitialState':
-            var mixinState = mixin.getInitialState();
+          case 'state':
+            var mixinState = mixin.state;
             Object.keys(mixinState).forEach(function (key) {
               state[key] = mixinState[key];
             });
@@ -96,7 +96,7 @@ flux.createActions = function () {
 };
 
 flux.createStore = function (definition) {
-  var state = definition.getInitialState ? definition.getInitialState() : {};
+  var state = definition.state ? definition.state : {};
   return mergeStore(definition.mixins, definition, state);
 };
 

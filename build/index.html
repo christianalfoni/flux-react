@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <script src="react.js"></script>
+    <script src="JSXTransformer.js"></script>
+    <script src="flux-react.js"></script>
+    <script type="text/jsx">
+      /** @jsx React.DOM */
+
+      var actions = flux.createActions(['addTodo', 'removeTodo']);
+
+      var mixin = {
+        state: {
+          todos: []
+        },
+        actions: [
+          actions.removeTodo
+        ],
+        removeTodo: function () {
+
+        },
+        exports: {
+          getTodos: function () {
+            return this.todos;
+          }
+        }
+      };
+
+      var store = flux.createStore({
+        mixins: [
+          mixin
+        ],
+        actions: [
+          actions.addTodo
+        ],
+        addTodo: function () {
+          this.state.todos.push({
+            id: Date.now(),
+            title: 'bah'
+          });
+          this.emitChange();
+        },
+
+        exports: {
+          isLoggedIn: function () {
+            return this.isLoggedIn;
+          }
+        }
+      });
+
+      var MyComp = React.createClass({
+        getInitialState: function () {
+          return {
+            todos: store.getTodos()
+          };
+        },
+        triggerAction: function () {
+          actions.addTodo();
+        },
+        onChange: function () {
+          this.setState({
+            todos: store.getTodos()
+          });
+        },
+        onMyEvent: function () {
+          console.log('got an event!');
+        },
+        componentWillMount: function () {
+          store.addChangeListener(this.onChange);
+          store.addListener('my:event', this.onMyEvent);
+        },
+        componentWillUnmount: function () {
+          store.removeChangeListener(this.onChange);
+          store.removeListener('my:event', this.onMyEvent);
+        },
+        render: function () {
+          return (
+            <div>
+              <h1>Hello world</h1>
+              <button onClick={this.triggerAction}>Click</button>
+              {JSON.stringify(this.state.todos)}
+            </div>
+          );
+        }
+      });
+      React.renderComponent(<MyComp/>, document.body);
+
+    </script>
+  </body>
+</html>
