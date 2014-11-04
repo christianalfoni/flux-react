@@ -5,7 +5,7 @@ var safeDeepClone = require('./safeDeepClone.js');
 
 var flux = {};
 
-function mergeStore (mixins, source, state) {
+function mergeStore (mixins, source) {
 
   source.actions = source.actions || [];
   source.exports = source.exports || {};
@@ -17,16 +17,8 @@ function mergeStore (mixins, source, state) {
       Object.keys(mixin).forEach(function (key) {
 
         switch(key) {
-          case 'state':
-            var mixinState = mixin.state;
-            Object.keys(mixinState).forEach(function (key) {
-              state[key] = mixinState[key];
-            });
-            break;
           case 'mixins':
-
-            // Return as actions and exports are handled on top traversal level
-            return mergeStore(mixin.mixins, mixin, state);
+            return mergeStore(mixin.mixins, mixin);
             break;
           case 'actions':
             source.actions = source.actions.concat(mixin.actions);
@@ -37,6 +29,9 @@ function mergeStore (mixins, source, state) {
             });
             break;
           default:
+            if (source[key]) {
+              throw new Error('The property: ' + key + ', already exists. Can not merge mixin with keys: ' + Object.keys(mixin).join(', '));
+            }
             source[key] = mixin[key];
         }
 
@@ -77,11 +72,9 @@ function mergeStore (mixins, source, state) {
   // Register exports
   Object.keys(source.exports).forEach(function (key) {
     exports[key] = function () {
-      return safeDeepClone('[Circular]', [], source.exports[key].apply(state, arguments));
+      return safeDeepClone('[Circular]', [], source.exports[key].apply(source, arguments));
     };
   });
-
-  source.state = state;
 
   return exports;
 
@@ -96,8 +89,7 @@ flux.createActions = function () {
 };
 
 flux.createStore = function (definition) {
-  var state = definition.state ? definition.state : {};
-  return mergeStore(definition.mixins, definition, state);
+  return mergeStore(definition.mixins, definition);
 };
 
 // If running in global mode, expose $$

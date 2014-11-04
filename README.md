@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/christianalfoni/flux-react.svg?branch=master)](https://travis-ci.org/christianalfoni/flux-react)
-
 flux-react
 ==========
 
@@ -28,6 +26,9 @@ It can be difficult to get going with React JS and FLUX as there is no complete 
 Download from **releases/** folder of the repo, use `npm install flux-react` or `bower install flux-react`, but I recommend using the boilerplate located here: [flux-react-boilerplate](https://github.com/christianalfoni/flux-react-boilerplate). It has everything set up for you.
 
 ## <a name="changes">Changes</a>
+
+**2.3.0**
+- Removed special state handling alltogether. Put state directly on the store. This keeps consistency when working with state from handlers and exports. 
 
 **2.2.0**
 - Removed **getInitialState()** from store and just use **state**. There is not reason to calculate state with a function as there are no props, or anything else, passed to the store on instanciation
@@ -64,21 +65,17 @@ Creates a store.
 ```javascript
 var flux = require('flux-react');
 var MyStore = flux.createStore({
-	state: {
-		todos: []
-	}
+	todos: []
 });
 ```
-A method that returns the initial state of the store.
+Add state properties directly to your store.
 
 #### <a name="storeactions">actions</a>
 ```javascript
 var flux = require('flux-react');
 var actions = require('./actions.js');
 var MyStore = flux.createStore({
-	state: {
-		todos: []
-	},
+	todos: []
 	actions: [
 		actions.addTodo
 	]
@@ -91,14 +88,12 @@ List what actions the store should handle. They will map to handler with the sam
 var flux = require('flux-react');
 var actions = require('./actions.js');
 var MyStore = flux.createStore({
-	state: {
-		todos: []
-	},
+	todos: []
 	actions: [
 		actions.addTodo
 	],
 	addTodo: function (title) {
-		this.state.todos.push({title: title, completed: false});
+		this.todos.push({title: title, completed: false});
 	}
 });
 ```
@@ -109,14 +104,12 @@ Based on the name of the action, add a handler that will run when the action is 
 var flux = require('flux-react');
 var actions = require('./actions.js');
 var MyStore = flux.createStore({
-	state: {
-		todos: []
-	},
+	todos: []
 	actions: [
 		actions.addTodo
 	],
 	addTodo: function (title) {
-		this.state.todos.push({title: title, completed: false});
+		this.todos.push({title: title, completed: false});
 		this.emitChange();
 		this.emit('added');
 	}
@@ -129,14 +122,12 @@ Run **emitChange** to notify about a general change in the store. Run **emit** w
 var flux = require('flux-react');
 var actions = require('./actions.js');
 var MyStore = flux.createStore({
-	state: {
-		todos: []
-	},
+	todos: [],
 	actions: [
 		actions.addTodo
 	],
 	addTodo: function (title) {
-		this.state.todos.push({title: title, completed: false});
+		this.todos.push({title: title, completed: false});
 		this.emitChange();
 		this.emit('added');
 	},
@@ -147,7 +138,7 @@ var MyStore = flux.createStore({
 	}
 });
 ```
-Methods defined in exports will be returned by **createStore**. Components or other parts of the architecture can use it to get state from the store. The methods are bound to the state object of the store, meaning "this.todos" points to the state "todos". 
+Methods defined in exports will be returned by **createStore**. Components or other parts of the architecture can use it to get state from the store. The methods are bound to the store, meaning "this.todos" points to the state "todos". 
 
 **Note!** Values returned by an export method will be deep cloned. Meaning that the state of a store is immutable. You can not do changes to a returned value and expect that to be valid inside your store also. You have to trigger an action to change the state of a store.
 
@@ -157,27 +148,23 @@ var flux = require('flux-react');
 var actions = require('./actions.js');
 
 var MyMixin = {
-	state: {},
 	actions: [
 		actions.removeTodo
 	],
 	removeTodo: function (index) {
 		this.state.todos.splice(index, 1);
 		this.emitChange();
-	},
-	exports: {}
+	}
 };
 
 var MyStore = flux.createStore({
+	todos: [],
 	mixins: [MyMixin],
-	state: {
-		todos: []
-	},
 	actions: [
 		actions.addTodo
 	],
 	addTodo: function (title) {
-		this.state.todos.push({title: title, completed: false});
+		this.todos.push({title: title, completed: false});
 		this.emitChange();
 	},
 	exports: {
@@ -187,7 +174,7 @@ var MyStore = flux.createStore({
 	}
 });
 ```
-Mixins helps you handle big stores. You do not want to divide your stores within one section of your application as they very quickly become dependant on each other. That can result in circular dependency problems. Use mixins instead and create big stores. **getInitialState**, **actions**, **handlers** and **exports** will be merged with the main store.
+Mixins helps you handle big stores. You do not want to divide your stores within one section of your application as they very quickly become dependant on each other. That can result in circular dependency problems. Use mixins instead and create big stores. **state**, **actions**, **handlers** and **exports** will be merged with the main store as expected.
 
 **ProTip!** In big stores it is a good idea to create a StatesMixin that holds all possible state properties in your store. That makes it very easy to look up what states are available to you.
 
@@ -195,12 +182,10 @@ Mixins helps you handle big stores. You do not want to divide your stores within
 var flux = require('flux-react');
 
 var StateMixin = {
-	state: {
-		someState: true,
-		stateA: 'foo',
-		stateB: 'bar',
-		stateC: []
-	}
+	someState: true,
+	stateA: 'foo',
+	stateB: 'bar',
+	stateC: []
 };
 
 var MyStore = flux.createStore({

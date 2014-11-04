@@ -11,9 +11,7 @@
       var actions = flux.createActions(['addTodo', 'removeTodo']);
 
       var mixin = {
-        state: {
-          todos: []
-        },
+        todos: [],
         actions: [
           actions.removeTodo
         ],
@@ -35,7 +33,7 @@
           actions.addTodo
         ],
         addTodo: function () {
-          this.state.todos.push({
+          this.todos.push({
             id: Date.now(),
             title: 'bah'
           });
