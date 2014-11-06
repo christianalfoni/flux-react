@@ -32,12 +32,12 @@
         actions: [
           actions.addTodo
         ],
-        addTodo: function () {
-          this.todos.push({
-            id: Date.now(),
-            title: 'bah'
-          });
-          this.emitChange();
+        addTodo: function (todo) {
+          todo.id = Date.now();
+          this.todos.push(todo);
+          setTimeout(function () {
+            this.emitChange();
+          }.bind(this), 0);
         },
 
         exports: {
@@ -54,7 +54,13 @@
           };
         },
         triggerAction: function () {
-          actions.addTodo();
+          var todo = {
+            title: 'hey',
+            checked: false
+          }
+          actions.addTodo(todo);
+          todo.title = 'hoi';
+
         },
         onChange: function () {
           this.setState({

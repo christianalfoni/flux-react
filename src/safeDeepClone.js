@@ -13,10 +13,6 @@ function safeDeepClone(circularValue, refs, obj) {
 
   // Handle Array - or array-like items (Buffers)
   if (obj instanceof Array || obj.length) {
-    //return Buffer as-is
-    if (typeof Buffer === "function" && typeof Buffer.isBuffer === "function" && Buffer.isBuffer(obj)) {
-      return new Buffer(obj);
-    }
     
     refs.push(obj);
     copy = [];
