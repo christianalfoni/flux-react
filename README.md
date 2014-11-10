@@ -27,6 +27,9 @@ Download from **releases/** folder of the repo, use `npm install flux-react` or 
 
 ## <a name="changes">Changes</a>
 
+**2.4.1**
+- Added ArrayBuffer, Blob and File as "non-clonable" objects
+
 **2.4.0**
 - actions now deep clones arguments also, to avoid calling actions with complex objects that are later changed
 - Smaller file size. Removed Buffer cloning and browserify paths
