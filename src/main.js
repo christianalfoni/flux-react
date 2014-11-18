@@ -43,11 +43,16 @@ function mergeStore (mixins, source) {
   var exports = Object.create(EventEmitter.prototype);
 
   source.emitChange = function () {
-    exports.emit('change');
+    setTimeout(function () { // Async to avoid running within render of component
+      exports.emit('change');
+    }, 0);
   };
 
   source.emit = function () {
-    exports.emit.apply(exports, arguments);
+    var args = arguments;
+    setTimeout(function () { // Async to avoid running within render of component
+      exports.emit.apply(exports, args);
+    }, 0);
   };
 
   exports.addChangeListener = function (callback) {

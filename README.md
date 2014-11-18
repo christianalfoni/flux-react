@@ -27,6 +27,9 @@ Download from **releases/** folder of the repo, use `npm install flux-react` or 
 
 ## <a name="changes">Changes</a>
 
+**2.4.2**
+- Store events are now emitted async. This is needed due to the async nature of component rendering
+
 **2.4.1**
 - Added ArrayBuffer, Blob and File as "non-clonable" objects
 
