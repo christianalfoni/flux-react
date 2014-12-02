@@ -35,9 +35,7 @@
         addTodo: function (todo) {
           todo.id = Date.now();
           this.todos.push(todo);
-          setTimeout(function () {
-            this.emitChange();
-          }.bind(this), 0);
+          this.emit('todos.add');
         },
 
         exports: {
@@ -71,12 +69,10 @@
           console.log('got an event!');
         },
         componentWillMount: function () {
-          store.addChangeListener(this.onChange);
-          store.addListener('my:event', this.onMyEvent);
+          store.onAny(this.onChange);
         },
         componentWillUnmount: function () {
-          store.removeChangeListener(this.onChange);
-          store.removeListener('my:event', this.onMyEvent);
+          store.onAny(this.onChange);
         },
         render: function () {
           return (

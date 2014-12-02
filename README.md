@@ -16,7 +16,6 @@ A React JS flux expansion based on experiences building [www.jsfridge.com](http:
 		- [events](#events)
 		- [exports](#exports)
 		- [mixins](#mixins)
-		- [changeListener](#changelistener)
 		- [listener](#listener)
 
 ## <a name="whatisitallabout">What is it all about?</a>
@@ -26,6 +25,11 @@ It can be difficult to get going with React JS and FLUX as there is no complete 
 Download from **releases/** folder of the repo, use `npm install flux-react` or `bower install flux-react`, but I recommend using the boilerplate located here: [flux-react-boilerplate](https://github.com/christianalfoni/flux-react-boilerplate). It has everything set up for you.
 
 ## <a name="changes">Changes</a>
+
+**2.5.0**
+- Changed to EventEmitter2 to allow more granular control of changes in store
+- Updated documentation with examples
+- Old API still works
 
 **2.4.2**
 - Store events are now emitted async. This is needed due to the async nature of component rendering
@@ -120,12 +124,11 @@ var MyStore = flux.createStore({
 	],
 	addTodo: function (title) {
 		this.todos.push({title: title, completed: false});
-		this.emitChange();
-		this.emit('added');
+		this.emit('todos.add');
 	}
 });
 ```
-Run **emitChange** to notify about a general change in the store. Run **emit** with a named event to notify components to trigger something. In this example, maybe you wanted to play an animation in a component whenever a todo was added.
+flux-react uses EventEmitter2 which allows for more granular control of events. Instead of always triggering a change event or/and trigger a specific event you will now always trigger a specifically named event. It is recommended to namespace your events related to the state you are changing. In the current example "todos" is the state name and "add" is what we did to that state. That becomes "todos.add". Look at component to see how you can use this to optimize your rendering.
 
 #### <a name="exports">exports</a>
 ```javascript
@@ -138,8 +141,7 @@ var MyStore = flux.createStore({
 	],
 	addTodo: function (title) {
 		this.todos.push({title: title, completed: false});
-		this.emitChange();
-		this.emit('added');
+		this.emit('todos.add');
 	},
 	exports: {
 		getTodos: function () {
@@ -163,7 +165,7 @@ var MyMixin = {
 	],
 	removeTodo: function (index) {
 		this.state.todos.splice(index, 1);
-		this.emitChange();
+		this.emit('todos.remove');
 	}
 };
 
@@ -175,7 +177,7 @@ var MyStore = flux.createStore({
 	],
 	addTodo: function (title) {
 		this.todos.push({title: title, completed: false});
-		this.emitChange();
+		this.emit('todos.add');
 	},
 	exports: {
 		getTodos: function () {
@@ -207,7 +209,7 @@ var MyStore = flux.createStore({
 	}
 });
 ```
-#### <a name="changelistener">changeListener</a>
+#### <a name="listener">listener</a>
 ```javascript
 var React = require('react');
 var MyStore = require('./MyStore.js');
@@ -218,10 +220,15 @@ var MyComponent = React.createClass({
 		};
 	},
 	componentWillMount: function () {
-		MyStore.addChangeListener(this.update);
+		MyStore.onAny(this.update); // On any events triggered from the store
+		MyStore.on('todos.add', this.update); // When specific event is triggered from the store
+		MyStore.on('todos.*', this.update); // When events related to todos are triggered from the store
+		MyStore.once('todos.add', this.update); // Trigger only once
+		MyStore.many('todos.remove', 5, this.update); // Trigger only 5 times
 	},
 	componentWillUnmount: function () {
-		MyStore.removeChangeListener(this.update);
+		MyStore.offAny(this.update); // Remove all events listener
+		MyStore.off('todos.add', this.update); // Remove any other type of listener
 	},
 	update: function () {
 		this.setState({
@@ -235,42 +242,7 @@ var MyComponent = React.createClass({
 	}
 });
 ```
-Add and remove change listener to react to general change events in stores.
-
-#### <a name="changelistener">listener</a>
-```javascript
-var React = require('react');
-var MyStore = require('./MyStore.js');
-var MyComponent = React.createClass({
-	getInitialState: function () {
-		return {
-			playAnimation: false
-		};
-	},
-	componentWillMount: function () {
-		MyStore.addListener('added', this.playAnimation);
-	},
-	componentWillUnmount: function () {
-		MyStore.removeListener('added', this.playAnimation);
-	},
-	playAnimation: function () {
-		this.setState({
-			playAnimation: true
-		});
-		setTimeout(function () {
-			this.setState({
-				playAnimation: false
-			});
-		}.bind(this), 2000);
-	},
-	render: function () {
-		return (
-			<div className={this.state.playAnimation ? 'animation' : ''}></div>
-		);
-	}
-});
-```
-Add and remove listener to react to specific events in stores.
+Add and remove listeners to handle updates from the store
 
 License
 -------

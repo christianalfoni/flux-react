@@ -6,7 +6,7 @@
  * ====================================================================================
  */
 
-var EventEmitter = require('./EventEmitter.js');
+var EventEmitter = require('eventemitter2').EventEmitter2;
 var safeDeepClone = require('./safeDeepClone.js');
 
 var createActionFunction = function (actionName) {
@@ -29,6 +29,8 @@ var createActionFunction = function (actionName) {
 
   };
 
+  var emitter = new EventEmitter();
+
   // It is possible to listen to the function and to achieve that we
   // have to manually inherit methods from EventEmitter
   for (var prop in EventEmitter.prototype) {
@@ -36,7 +38,7 @@ var createActionFunction = function (actionName) {
       fn[prop] = EventEmitter.prototype[prop];
     }
   }
-
+  
   // Add handlerName
   fn.handlerName = actionName;
 

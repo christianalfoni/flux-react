@@ -1,6 +1,6 @@
 var React = global.React || require('react');
 var action = require('./action.js');
-var EventEmitter = require('./EventEmitter.js');
+var EventEmitter = require('eventemitter2').EventEmitter2;
 var safeDeepClone = require('./safeDeepClone.js');
 
 var flux = {};
@@ -19,7 +19,6 @@ function mergeStore (mixins, source) {
         switch(key) {
           case 'mixins':
             return mergeStore(mixin.mixins, mixin);
-            break;
           case 'actions':
             source.actions = source.actions.concat(mixin.actions);
             break;
@@ -40,7 +39,9 @@ function mergeStore (mixins, source) {
 
   }
 
-  var exports = Object.create(EventEmitter.prototype);
+  var exports = new EventEmitter({
+    wildcard: true
+  });
 
   source.emitChange = function () {
     setTimeout(function () { // Async to avoid running within render of component

@@ -1,6 +1,6 @@
 {
   "name": "flux-react",
-  "version": "2.4.2",
+  "version": "2.5.0",
   "description": "A React JS FLUX expansion",
   "main": "./src/main.js",
   "scripts": {
