@@ -26,6 +26,9 @@ Download from **releases/** folder of the repo, use `npm install flux-react` or 
 
 ## <a name="changes">Changes</a>
 
+**2.5.1**
+- Added eventemitter2 to package.json
+
 **2.5.0**
 - Changed to EventEmitter2 to allow more granular control of changes in store
 - Updated documentation with examples
