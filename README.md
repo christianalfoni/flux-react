@@ -1,7 +1,7 @@
 flux-react
 ==========
 
-A React JS flux expansion based on experiences building [www.jsfridge.com](http://www.jsfridge.com) and [www.jflux.io](http://www.jflux.io). Read more about FLUX over at [Facebook Flux](http://facebook.github.io/flux/). I wrote an article about it here: [My experiences building a FLUX application](http://christianalfoni.github.io/javascript/2014/10/27/my-experiences-building-a-flux-application.html)
+A React JS flux expansion based on experiences building [www.jsfridge.com](http://www.jsfridge.com) and [www.jflux.io](http://www.jflux.io). Read more about FLUX over at [Facebook Flux](http://facebook.github.io/flux/). I wrote an article about it here: [My experiences building a FLUX application](http://christianalfoni.github.io/javascript/2014/10/27/my-experiences-building-a-flux-application.html) and the background for version 2.6.0 and up is here: [An alternative render strategy with FLUX and React JS](http://christianalfoni.github.io/javascript/2014/12/04/flux-and-eventemitter2.html)
 
 - [What is it all about?](#whatisitallabout)
 - [How to install](#howtoinstall)
@@ -216,7 +216,7 @@ var MyComponent = React.createClass({
 Add and remove listeners to handle updates from the store
 
 #### <a name="rendermixin">RenderMixin</a>
-If you want to know more about this feature, read the following article: [An alternative render strategy with FLUX and React JS](http://www.christianalfoni.com/javascript/2014/12/04/flux-and-eventemitter2.html). The main point is that React JS will most likely rerender your whole application on every change event in your stores. You can control this behavior by adding the RenderMixin to your components. Instead of a component automatically rerenders all child components it will only do that if props has been passed to the child and the props actually has changed. The mixin also adds an "update" method to your component which can be called to just update the component without passing any new state. It does not do a **forceUpdate**, but it does a **setState** passing an empty object. This gives a clean API for working with state from stores, as you can see below.
+If you want to know more about this feature, read the following article: [An alternative render strategy with FLUX and React JS](http://christianalfoni.github.io/javascript/2014/12/04/flux-and-eventemitter2.html). The main point is that React JS will most likely rerender your whole application on every change event in your stores. You can control this behavior by adding the RenderMixin to your components. Instead of a component automatically rerenders all child components it will only do that if props has been passed to the child and the props actually has changed. The mixin also adds an "update" method to your component which can be called to just update the component without passing any new state. It does not do a **forceUpdate**, but it does a **setState** passing an empty object. This gives a clean API for working with state from stores, as you can see below.
 
 ```javascript
 var React = require('react');
