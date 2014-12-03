@@ -5,7 +5,6 @@ A React JS flux expansion based on experiences building [www.jsfridge.com](http:
 
 - [What is it all about?](#whatisitallabout)
 - [How to install](#howtoinstall)
-- [Changes](#changes)
 - [API](#api)
 	- [flux.debug()](#debug)
 	- [flux.createActions()](#actions)
@@ -18,41 +17,13 @@ A React JS flux expansion based on experiences building [www.jsfridge.com](http:
 		- [mixins](#mixins)
 		- [listener](#listener)
 	- [flux.RenderMixin](#rendermixin)
+- [Changes](#changes)
 
 ## <a name="whatisitallabout">What is it all about?</a>
 It can be difficult to get going with React JS and FLUX as there is no complete framework with all the tools you need. This project will help you get going with the FLUX parts and it has a boilerplate with a browserify workflow, [flux-react-boilerplate](https://github.com/christianalfoni/flux-react-boilerplate).
 
 ## <a name="howtoinstall">How to install</a>
 Download from **releases/** folder of the repo, use `npm install flux-react` or `bower install flux-react`, but I recommend using the boilerplate located here: [flux-react-boilerplate](https://github.com/christianalfoni/flux-react-boilerplate). It has everything set up for you.
-
-## <a name="changes">Changes</a>
-
-**2.6.0**
-- Added RenderMixin to give you an alternative optimized render strategy
-
-**2.5.1**
-- Added eventemitter2 to package.json
-
-**2.5.0**
-- Changed to EventEmitter2 to allow more granular control of changes in store
-- Updated documentation with examples
-- Old API still works
-
-**2.4.2**
-- Store events are now emitted async. This is needed due to the async nature of component rendering
-
-**2.4.1**
-- Added ArrayBuffer, Blob and File as "non-clonable" objects
-
-**2.4.0**
-- actions now deep clones arguments also, to avoid calling actions with complex objects that are later changed
-- Smaller file size. Removed Buffer cloning and browserify paths
-
-**2.3.0**
-- Removed special state handling alltogether. Put state directly on the store. This keeps consistency when working with state from handlers and exports. 
-
-**2.2.0**
-- Removed **getInitialState()** from store and just use **state**. There is not reason to calculate state with a function as there are no props, or anything else, passed to the store on instanciation
 
 ## <a name="api">API</a>
 
@@ -266,6 +237,36 @@ var MyComponent = React.createClass({
 });
 ```
 Add and remove listeners to handle updates from the store
+
+## <a name="changes">Changes</a>
+
+**2.6.0**
+- Added RenderMixin to give you an alternative optimized render strategy
+
+**2.5.1**
+- Added eventemitter2 to package.json
+
+**2.5.0**
+- Changed to EventEmitter2 to allow more granular control of changes in store
+- Updated documentation with examples
+- Old API still works
+
+**2.4.2**
+- Store events are now emitted async. This is needed due to the async nature of component rendering
+
+**2.4.1**
+- Added ArrayBuffer, Blob and File as "non-clonable" objects
+
+**2.4.0**
+- actions now deep clones arguments also, to avoid calling actions with complex objects that are later changed
+- Smaller file size. Removed Buffer cloning and browserify paths
+
+**2.3.0**
+- Removed special state handling alltogether. Put state directly on the store. This keeps consistency when working with state from handlers and exports. 
+
+**2.2.0**
+- Removed **getInitialState()** from store and just use **state**. There is not reason to calculate state with a function as there are no props, or anything else, passed to the store on instanciation
+
 
 License
 -------
