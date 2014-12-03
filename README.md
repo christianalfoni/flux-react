@@ -17,6 +17,7 @@ A React JS flux expansion based on experiences building [www.jsfridge.com](http:
 		- [exports](#exports)
 		- [mixins](#mixins)
 		- [listener](#listener)
+	- [flux.RenderMixin](#rendermixin)
 
 ## <a name="whatisitallabout">What is it all about?</a>
 It can be difficult to get going with React JS and FLUX as there is no complete framework with all the tools you need. This project will help you get going with the FLUX parts and it has a boilerplate with a browserify workflow, [flux-react-boilerplate](https://github.com/christianalfoni/flux-react-boilerplate).
@@ -25,6 +26,9 @@ It can be difficult to get going with React JS and FLUX as there is no complete 
 Download from **releases/** folder of the repo, use `npm install flux-react` or `bower install flux-react`, but I recommend using the boilerplate located here: [flux-react-boilerplate](https://github.com/christianalfoni/flux-react-boilerplate). It has everything set up for you.
 
 ## <a name="changes">Changes</a>
+
+**2.6.0**
+- Added RenderMixin to give you an alternative optimized render strategy
 
 **2.5.1**
 - Added eventemitter2 to package.json
@@ -217,11 +221,6 @@ var MyStore = flux.createStore({
 var React = require('react');
 var MyStore = require('./MyStore.js');
 var MyComponent = React.createClass({
-	getInitialState: function () {
-		return {
-			todos: MyStore.getTodos()
-		};
-	},
 	componentWillMount: function () {
 		MyStore.onAny(this.update); // On any events triggered from the store
 		MyStore.on('todos.add', this.update); // When specific event is triggered from the store
@@ -234,9 +233,30 @@ var MyComponent = React.createClass({
 		MyStore.off('todos.add', this.update); // Remove any other type of listener
 	},
 	update: function () {
-		this.setState({
-			todos: MyStore.getTodos()
-		});
+		this.setState({});
+	},
+	render: function () {
+		return (
+			<div>Number of todos: {MyStore.getTodos().length}</div>
+		);
+	}
+});
+```
+Add and remove listeners to handle updates from the store
+
+#### <a name="rendermixin">RenderMixin</a>
+If you want to know more about this feature, read the following article: [An alternative render strategy with FLUX and React JS](http://www.christianalfoni.com/javascript/2014/12/04/flux-and-eventemitter2.html). The main point is that React JS will most likely rerender your whole application on every change event in your stores. You can control this behavior by adding the RenderMixin to your components. Instead of a component automatically rerenders all child components it will only do that if props has been passed to the child and the props actually has changed. The mixin also adds an "update" method to your component which can be called to just update the component without passing any new state. It does not do a **forceUpdate**, but it does a **setState** passing an empty object. This gives a clean API for working with state from stores, as you can see below.
+
+```javascript
+var React = require('react');
+var MyStore = require('./MyStore.js');
+var MyComponent = React.createClass({
+	mixins: [flux.RenderMixin],
+	componentWillMount: function () {
+		MyStore.on('todos.*', this.update);
+	},
+	componentWillUnmount: function () {
+		MyStore.off('todos.add', this.update);
 	},
 	render: function () {
 		return (

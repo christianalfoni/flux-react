@@ -2,6 +2,7 @@ var React = global.React || require('react');
 var action = require('./action.js');
 var EventEmitter = require('eventemitter2').EventEmitter2;
 var safeDeepClone = require('./safeDeepClone.js');
+var RenderMixin = require('./RenderMixin.js');
 
 var flux = {};
 
@@ -97,6 +98,8 @@ flux.createActions = function () {
 flux.createStore = function (definition) {
   return mergeStore(definition.mixins, definition);
 };
+
+flux.RenderMixin = RenderMixin;
 
 // If running in global mode, expose $$
 if (!global.exports && !global.module && (!global.define || !global.define.amd)) {

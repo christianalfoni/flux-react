@@ -6,7 +6,42 @@
     <script src="JSXTransformer.js"></script>
     <script src="flux-react.js"></script>
     <script type="text/jsx">
+
       /** @jsx React.DOM */
+
+      var ChildComponent = React.createClass({
+        mixins: [flux.RenderMixin],
+        render: function () {
+          console.log('rendering child');
+          return (
+            <div>I am child: {this.props.foo.foo[0].foo}</div>
+          );
+        }
+      });
+
+      var RootComponent = React.createClass({
+        getInitialState: function () {
+          return {
+            foo: { foo: [{foo: 'bar'}] }
+          }
+        },
+        componentWillMount: function () {
+          setTimeout(function () {
+            this.setState({
+              foo: { foo: [{foo: 'bar1'}] }
+            });
+          }.bind(this), 500);
+        },
+        render: function () {
+          return (
+            <div>I am parent <div><ChildComponent foo={this.state.foo}/></div></div>
+          );
+        }     
+      });
+
+      React.renderComponent(RootComponent(), document.body);
+
+/*
 
       var actions = flux.createActions(['addTodo', 'removeTodo']);
 
@@ -85,7 +120,7 @@
         }
       });
       React.renderComponent(<MyComp/>, document.body);
-
+*/
     </script>
   </body>
 </html>
