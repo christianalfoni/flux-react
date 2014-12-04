@@ -220,6 +220,7 @@ If you want to know more about this feature, read the following article: [An alt
 
 ```javascript
 var React = require('react');
+var flux = require('flux-react');
 var MyStore = require('./MyStore.js');
 var MyComponent = React.createClass({
 	mixins: [flux.RenderMixin],
