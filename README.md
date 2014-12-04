@@ -227,7 +227,7 @@ var MyComponent = React.createClass({
 		MyStore.on('todos.*', this.update);
 	},
 	componentWillUnmount: function () {
-		MyStore.off('todos.add', this.update);
+		MyStore.off('todos.*', this.update);
 	},
 	render: function () {
 		return (
