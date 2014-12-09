@@ -1,8 +1,37 @@
+function arrayBufferSupport() {
+  try {
+    return !!new ArrayBuffer();
+  } catch (e) {
+    return false;
+  }
+}
+
+function blobSupport() {
+  try {
+    return !!new Blob();
+  } catch (e) {
+    return false;
+  }
+}
+
+function fileSupport() {
+  try {
+    return !!new File();
+  } catch(e) {
+    return false;
+  }
+}
+
 function safeDeepClone(circularValue, refs, obj) {
   var copy, tmp;
 
   // object is a false or empty value, or otherwise not an object
-  if (!obj || "object" !== typeof obj || obj instanceof ArrayBuffer || obj instanceof Blob || obj instanceof File) return obj;
+  if (!obj || "object" !== typeof obj ||
+  arrayBufferSupport() && obj instanceof ArrayBuffer ||
+  blobSupport() && obj instanceof Blob ||
+  fileSupport() && obj instanceof File) {
+    return obj;
+  }
 
   // Handle Date
   if (obj instanceof Date) {
