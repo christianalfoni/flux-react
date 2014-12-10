@@ -26,10 +26,12 @@ function safeDeepClone(circularValue, refs, obj) {
   var copy, tmp;
 
   // object is a false or empty value, or otherwise not an object
-  if (!obj || "object" !== typeof obj ||
-  arrayBufferSupport() && obj instanceof ArrayBuffer ||
-  blobSupport() && obj instanceof Blob ||
-  fileSupport() && obj instanceof File) {
+  if (!obj ||
+    "object" !== typeof obj ||
+    arrayBufferSupport() && obj instanceof ArrayBuffer ||
+    blobSupport() && obj instanceof Blob ||
+    fileSupport() && obj instanceof File)
+  {
     return obj;
   }
 
