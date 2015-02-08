@@ -241,6 +241,9 @@ Add and remove listeners to handle updates from the store
 
 ## <a name="changes">Changes</a>
 
+**2.6.2**
+- Optimized RenderMixin with shallow check
+
 **2.6.1**
 - Added feature detection on ArrayBuffer, Blob and File. Thanks to @rdjpalmer
 
