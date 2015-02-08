@@ -193,22 +193,24 @@ var React = require('react');
 var MyStore = require('./MyStore.js');
 var MyComponent = React.createClass({
 	componentWillMount: function () {
-		MyStore.onAny(this.update); // On any events triggered from the store
-		MyStore.on('todos.add', this.update); // When specific event is triggered from the store
-		MyStore.on('todos.*', this.update); // When events related to todos are triggered from the store
-		MyStore.once('todos.add', this.update); // Trigger only once
-		MyStore.many('todos.remove', 5, this.update); // Trigger only 5 times
+		MyStore.onAny(this.updateState); // On any events triggered from the store
+		MyStore.on('todos.add', this.updateState); // When specific event is triggered from the store
+		MyStore.on('todos.*', this.updateState); // When events related to todos are triggered from the store
+		MyStore.once('todos.add', this.updateState); // Trigger only once
+		MyStore.many('todos.remove', 5, this.updateState); // Trigger only 5 times
 	},
 	componentWillUnmount: function () {
-		MyStore.offAny(this.update); // Remove all events listener
-		MyStore.off('todos.add', this.update); // Remove any other type of listener
+		MyStore.offAny(this.updateState); // Remove all events listener
+		MyStore.off('todos.add', this.updateState); // Remove any other type of listener
 	},
-	update: function () {
-		this.setState({});
+	updateState: function () {
+		this.setState({
+		  todos: MyStore.getTodos()
+		});
 	},
 	render: function () {
 		return (
-			<div>Number of todos: {MyStore.getTodos().length}</div>
+			<div>Number of todos: {this.state.getTodos().length}</div>
 		);
 	}
 });
@@ -216,7 +218,7 @@ var MyComponent = React.createClass({
 Add and remove listeners to handle updates from the store
 
 #### <a name="rendermixin">RenderMixin</a>
-If you want to know more about this feature, read the following article: [An alternative render strategy with FLUX and React JS](http://christianalfoni.github.io/javascript/2014/12/04/flux-and-eventemitter2.html). The main point is that React JS will most likely rerender your whole application on every change event in your stores. You can control this behavior by adding the RenderMixin to your components. Instead of a component automatically rerenders all child components it will only do that if props has been passed to the child and the props actually has changed. The mixin also adds an "update" method to your component which can be called to just update the component without passing any new state. It does not do a **forceUpdate**, but it does a **setState** passing an empty object. This gives a clean API for working with state from stores, as you can see below.
+If you want to know more about this feature, read the following article: [An alternative render strategy with FLUX and React JS](http://christianalfoni.github.io/javascript/2014/12/04/flux-and-eventemitter2.html). The main point is that React JS will most likely rerender your whole application on every change event in your stores. You can control this behavior by adding the RenderMixin to your components. Instead of a component automatically rerenders all child components it will only do that if the props or state of the component actually has changed. It is important that you move state from the store to the state of the component, like in the example below. That ensures that the mixin can evaluate the need for a render.
 
 ```javascript
 var React = require('react');
@@ -225,14 +227,19 @@ var MyStore = require('./MyStore.js');
 var MyComponent = React.createClass({
 	mixins: [flux.RenderMixin],
 	componentWillMount: function () {
-		MyStore.on('todos.*', this.update);
+		MyStore.on('todos.*', this.updateState);
 	},
 	componentWillUnmount: function () {
-		MyStore.off('todos.*', this.update);
+		MyStore.off('todos.*', this.updateState);
+	},
+	updateState: function () {
+	  this.setState({
+	    todos: MyStore.getTodos()
+	  });
 	},
 	render: function () {
 		return (
-			<div>Number of todos: {MyStore.getTodos().length}</div>
+			<div>Number of todos: {this.state.todos.length}</div>
 		);
 	}
 });
@@ -282,7 +289,7 @@ flux-react is licensed under the [MIT license](LICENSE).
 
 > The MIT License (MIT)
 >
-> Copyright (c) 2014 Brandon Tilley
+> Copyright (c) 2014 Christian Alfoni
 >
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 > of this software and associated documentation files (the "Software"), to deal
