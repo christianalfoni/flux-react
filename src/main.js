@@ -1,6 +1,6 @@
 var React = global.React || require('react');
 var action = require('./action.js');
-var EventEmitter = require('eventemitter2').EventEmitter2;
+var EventEmitter = require('eventemitter2').EventEmitter2 || require('eventemitter2');
 var safeDeepClone = require('./safeDeepClone.js');
 var RenderMixin = require('./RenderMixin.js');
 
