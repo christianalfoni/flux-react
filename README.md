@@ -248,7 +248,7 @@ Add and remove listeners to handle updates from the store
 
 ## <a name="changes">Changes</a>
 
-**2.6.3**
+**2.6.4**
 - Fixed AMD support (Thanks @VictorBlomberg)
 
 **2.6.2**
